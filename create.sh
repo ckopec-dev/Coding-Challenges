@@ -29,9 +29,10 @@ echo "SCRIPT: Setting variable OUTPUT_FILE: $OUTPUT_FILE."
 PROMPT="Solve Euler problem $ALGO_NAME in the $LANGUAGE_NAME programming language. Use markdown format."
 echo "SCRIPT: Setting variable PROMPT: $PROMPT"
 
-echo "SCRIPT: Using ollama to generate output."
-ollama run qwen3-coder $PROMPT > $OUTPUT_FILE
-echo "SCRIPT: Created $OUTPUT_FILE."
+LANGUAGE_FOR_PROMPT="${LANGUAGE_NAME/LWC/Lightning Web Components}"
+echo "SCRIPT: Setting variable LANGUAGE_FOR_PROMPT: $LANGUAGE_FOR_PROMPT"
+PROMPT="Show an example of $ALGO_NAME algorithm in $LANGUAGE_FOR_PROMPT programming language. Use markdown format."
+echo "SCRIPT: Setting variable PROMPT: $PROMPT"
 
 echo "SCRIPT: Authenticating to Github."
 gh auth login --hostname github.com --with-token < ../github_token.txt
