@@ -20,18 +20,15 @@ echo "SCRIPT: Setting variable WORKING_DIR: $WORKING_DIR."
 echo "SCRIPT: Changing working directory to $WORKING_DIR."
 cd $WORKING_DIR
 
-ALGO_NAME=$(head -n 1 $INPUT_FILE)
-echo "SCRIPT: Setting variable ALGO_NAME: $ALGO_NAME."
+PROBLEM_NAME=$(head -n 1 $INPUT_FILE)
+echo "SCRIPT: Setting variable PROBLEM_NAME: $PROBLEM_NAME."
 
-OUTPUT_FILE="$PROBLEM_TYPE/$LANGUAGE_NAME/${ALGO_NAME// /_}.md"
+OUTPUT_FILE="$PROBLEM_TYPE/$LANGUAGE_NAME/${PROBLEM_NAME// /_}.md"
 echo "SCRIPT: Setting variable OUTPUT_FILE: $OUTPUT_FILE."
-
-PROMPT="Solve Euler problem $ALGO_NAME in the $LANGUAGE_NAME programming language. Use markdown format."
-echo "SCRIPT: Setting variable PROMPT: $PROMPT"
 
 LANGUAGE_FOR_PROMPT="${LANGUAGE_NAME/LWC/Lightning Web Components}"
 echo "SCRIPT: Setting variable LANGUAGE_FOR_PROMPT: $LANGUAGE_FOR_PROMPT"
-PROMPT="Show an example of $ALGO_NAME algorithm in $LANGUAGE_FOR_PROMPT programming language. Use markdown format."
+PROMPT="Solve Euler problem $PROBLEM_NAME in the $LANGUAGE_NAME programming language. Use markdown format."
 echo "SCRIPT: Setting variable PROMPT: $PROMPT"
 
 echo "SCRIPT: Authenticating to Github."
@@ -40,7 +37,7 @@ gh auth login --hostname github.com --with-token < ../github_token.txt
 echo "SCRIPT: Pulling latest version."
 git pull
 
-BRANCH_NAME=${PROBLEM_TYPE// /_}-${LANGUAGE_NAME// /_}-${ALGO_NAME// /_}
+BRANCH_NAME=${PROBLEM_TYPE// /_}-${LANGUAGE_NAME// /_}-${PROBLEM_NAME// /_}
 echo "SCRIPT: Setting variable BRANCH_NAME: $BRANCH_NAME."
 echo "SCRIPT: Creating a new branch named $BRANCH_NAME."
 git checkout -b "$BRANCH_NAME"
