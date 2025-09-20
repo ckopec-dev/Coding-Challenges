@@ -35,8 +35,6 @@ echo "SCRIPT: Using ollama to generate output."
 ollama run qwen3-coder $PROMPT > $OUTPUT_FILE
 echo "SCRIPT: Created $OUTPUT_FILE."
 
-exit 0
-
 echo "SCRIPT: Authenticating to Github."
 gh auth login --hostname github.com --with-token < ../github_token.txt
 
