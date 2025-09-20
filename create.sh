@@ -28,7 +28,7 @@ echo "SCRIPT: Setting variable OUTPUT_FILE: $OUTPUT_FILE."
 
 LANGUAGE_FOR_PROMPT="${LANGUAGE_NAME/LWC/Lightning Web Components}"
 echo "SCRIPT: Setting variable LANGUAGE_FOR_PROMPT: $LANGUAGE_FOR_PROMPT"
-PROMPT="Solve Euler problem $PROBLEM_NAME in the $LANGUAGE_NAME programming language. Use markdown format."
+PROMPT="Solve Euler problem $PROBLEM_NAME in the $LANGUAGE_FOR_PROMPT programming language. Use markdown format."
 echo "SCRIPT: Setting variable PROMPT: $PROMPT"
 
 echo "SCRIPT: Using ollama to generate output."
