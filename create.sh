@@ -52,17 +52,17 @@ git add .
 echo "SCRIPT: Making commit."
 git commit -m "Added $OUTPUT_FILE"
 
-# Push the commit
 echo "SCRIPT: Pushing commit."
 git push --set-upstream origin $BRANCH_NAME
 
-# Creating the pull request
 echo "SCRIPT: Creating pull request."
 gh pr create --title "$BRANCH_NAME ready for review" --body "Generated automatically from create.sh."
 
-# Switch back to main branch
 echo "SCRIPT: Switching back to main."
 git switch main
+
+echo "SCRIPT: Deleting all branches but main."
+git branch | grep -v "main" | xargs git branch -D
 
 # Remove the first line
 echo "SCRIPT: Pruning list."
