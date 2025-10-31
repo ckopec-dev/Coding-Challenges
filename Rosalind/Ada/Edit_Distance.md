@@ -1,6 +1,7 @@
 # Euler Problem: Edit Distance in Ada
 
 ## Problem Statement
+
 The edit distance (also known as Levenshtein distance) between two strings is the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one string into the other.
 
 ## Solution in Ada
@@ -92,7 +93,8 @@ This Ada implementation solves the edit distance problem using dynamic programmi
 3. **Main procedure**: Tests the function with various string pairs
 
 ## Sample Output
-```
+
+```bash
 Edit Distance Examples:
 Distance between 'kitten' and 'sitting':  3
 Distance between 'saturday' and 'sunday':  3
@@ -102,8 +104,8 @@ Distance between '' and 'abc':  3
 ```
 
 ## Time and Space Complexity
+
 - **Time Complexity**: O(m × n) where m and n are the lengths of the input strings
 - **Space Complexity**: O(m × n) for the dynamic programming matrix
 
 The algorithm correctly handles all three operations: insertion, deletion, and substitution, finding the minimum number of operations needed to transform one string into another.
-

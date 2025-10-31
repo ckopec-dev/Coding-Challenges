@@ -3,6 +3,7 @@
 ## Problem Understanding
 
 The problem involves creating a character table from genetic strings, which typically means:
+
 - Processing DNA sequences (strings of nucleotides: A, C, G, T)
 - Creating a table showing character frequencies or positions
 - Analyzing genetic data patterns
@@ -151,7 +152,7 @@ end Genetic_Character_Table;
 
 ## Expected Output
 
-```
+```bash
 Genetic String Analysis
 =======================
 Sequence 1: ACGTACGT
@@ -174,4 +175,3 @@ T (Thymine):     3
 ```
 
 This Ada implementation provides a robust foundation for creating character tables from genetic strings while leveraging Ada's strong typing and structured programming features.
-
