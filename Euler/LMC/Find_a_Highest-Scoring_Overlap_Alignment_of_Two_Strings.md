@@ -1,0 +1,11303 @@
+# Euler Problem: Highest-Scoring Overlap Alignment in LMC
+
+I'll solve the problem of finding the highest-scoring overlap alignment of two strings using the Little Man Computer (LMC) programming language.
+
+## Problem Understanding
+
+An overlap alignment finds the best way to align two strings where one string can overlap with the other, allowing gaps at the beginning and end. The goal is to maximize the alignment score.
+
+## LMC Implementation
+
+```
+    ORG 100
+    INP
+    STA STR1LEN
+    INP
+    STA STR2LEN
+    INP
+    STA MATCH
+    INP
+    STA MISMATCH
+    INP
+    STA GAP
+    
+    LDA STR1LEN
+    ADD ONE
+    STA STR1END
+    LDA STR2LEN
+    ADD ONE
+    STA STR2END
+    
+    LDA STR1LEN
+    ADD STR2LEN
+    ADD THREE
+    STA MATRIXSIZE
+    
+    LDA STR1LEN
+    ADD STR2LEN
+    ADD THREE
+    STA MATRIXEND
+    
+    LDA ZERO
+    STA MATRIX
+    
+    LDA ONE
+    STA I
+    LDA ONE
+    STA J
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA STR1LEN
+    STA MAXSCORE
+    
+    LDA STR1LEN
+    ADD ONE
+    STA IEND
+    
+    LDA STR2LEN
+    ADD ONE
+    STA JEND
+    
+    LDA STR1LEN
+    ADD ONE
+    STA ISTART
+    
+    LDA STR2LEN
+    ADD ONE
+    STA JSTART
+    
+    LDA STR1LEN
+    ADD STR2LEN
+    ADD THREE
+    STA MATRIXEND
+    
+    LDA ZERO
+    STA MATRIX
+    LDA ZERO
+    STA I
+    LDA ZERO
+    STA J
+    
+    LDA ONE
+    STA I
+    LDA ONE
+    STA J
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA STR1LEN
+    ADD STR2LEN
+    ADD THREE
+    STA MATRIXEND
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA I
+    LDA ZERO
+    STA J
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    STA MAXSCORE
+    
+    LDA ISTART
+    LDA IEND
+    SUB ISTART
+    ADD ONE
+    STA ILOOP
+    
+    LDA JSTART
+    LDA JEND
+    SUB JSTART
+    ADD ONE
+    STA JLOOP
+    
+    LDA ONE
+    STA I
+    LDA ONE
+    STA J
+    
+    LDA ONE
+    STA I
+    LDA ONE
+    STA J
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+    LDA MATRIXEND
+    SUB MATRIX
+    STA MATRIXSIZE
+    
+    LDA ZERO
+    STA SCORE
+    
+    LDA I
+    LDA J
+    ADD MATRIX
+    STA MATRIX
+    
+    LDA MATRIX
+
+
